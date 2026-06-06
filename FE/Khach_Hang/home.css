@@ -1,0 +1,28 @@
+    .main {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        width: 95%;
+        max-width: 1200px;
+        margin: 40px auto;
+        align-items: flex-start;
+    }
+
+    /* ĐỊNH DẠNG CỘT TRÁI - KHỐI NHỎ */
+    .left {
+        flex: 1;
+        min-width: 280px;
+        background: #ffffff;
+        border: 1px solid cornflowerblue; 
+        border-radius: 8px; 
+        padding: 24px;
+    }
+
+    /* ĐỊNH DẠNG CỘT PHẢI - KHỐI CHÍNH LỚN */
+    .right {
+        flex: 3; 
+        background: #ffffff;    
+        border: 1px solid cornflowerblue;
+        border-radius: 8px;         
+        padding: 30px;
+    }

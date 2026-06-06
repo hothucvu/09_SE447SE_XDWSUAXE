@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập tài khoản</title>
-    <link rel="stylesheet" href="Css/login.css">
+    <link rel="stylesheet" href="./../FE/login.css">
 </head>
 <body>
     <div class="container">

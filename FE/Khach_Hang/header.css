@@ -1,0 +1,8 @@
+header { 
+    background: #7894d3;
+    border-bottom: 2px solid #0ea5e9; 
+    position: sticky; top: 0; z-index: 9999;
+    height: 80px;
+    display: flex; align-items: center;
+    text-decoration: none;
+}
