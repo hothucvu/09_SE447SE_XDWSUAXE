@@ -23,9 +23,9 @@ if (isset($_POST['login'])) {
             $_SESSION['user_name'] = $user['Taikhoan']; 
             $_SESSION['Taikhoan'] = $user['Taikhoan'];
             $_SESSION['Vaitro'] = $user['Vaitro'];
-            if($user['Vaitro']== 'khach'){header("Location: Khach_Hang/index.php?page=home");exit();}
-            if($user['Vaitro']== 'tho'){header("Location: Nhan_Vien/index.php?page=home");exit();}
-            if($user['Vaitro']== 'admin'){header("Location: Admin/index.php?page=home");exit();}
+            if($user['Vaitro']== 'khach'){header("Location: index.php?page=home");exit();}
+            if($user['Vaitro']== 'tho'){header("Location: index.php?page=home");exit();}
+            if($user['Vaitro']== 'admin'){header("Location: index.php?page=home");exit();}
         } 
     else {
             $message = "<p style='color:red; text-align:center;'>Mật khẩu không chính xác!</p>";

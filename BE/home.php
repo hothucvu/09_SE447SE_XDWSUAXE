@@ -1,4 +1,4 @@
-<link rel='stylesheet' href='../../FE/Khach_Hang/home.css'>
+<link rel='stylesheet' href='./../FE/home.css'>
 
 <div class="main">
     

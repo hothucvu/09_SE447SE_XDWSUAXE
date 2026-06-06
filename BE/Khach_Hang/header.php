@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
     <meta charset='utf-8'>
-    <link rel="stylesheet" href="../../FE/Khach_Hang/header.css">
+    <link rel="stylesheet" href="../FE/Khach_Hang/header.css">
 </head>
 <body>
     <header>
@@ -13,9 +13,9 @@
                 <td><a href="index.php?page=booking">Đặt dịch vụ</a></td>
                 <td><a href="index.php?page=list">Danh sách dịch vụ</a></td>
                 <?php if(isset($_SESSION['user_id'])): ?>
-                    <td><a href="../logout.php">Đăng xuất</a></td>
+                    <td><a href="logout.php">Đăng xuất</a></td>
                 <?php else: ?>
-                    <td><a href="../login.php">Đăng nhập </a></td>
+                    <td><a href="./login.php">Đăng nhập </a></td>
                 <?php endif; ?>
             </tr>
         </table>

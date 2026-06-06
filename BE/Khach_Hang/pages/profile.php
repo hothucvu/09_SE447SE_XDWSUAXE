@@ -1,6 +1,6 @@
     <?php
     if (!isset($_SESSION['user_id'])) {
-        header("Location: ../login.php");
+        header("Location: login.php");
         exit();
     }
     $id = $_SESSION['user_id'];
@@ -26,13 +26,8 @@
     $user = $result->fetch_assoc();
     ?>
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Thông tin tài khoản</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./profile.css">
-    </head>
-    <body>
+    <link rel="stylesheet" href="../FE/Khach_Hang/profile.css">
+
         <div class="container">
             <form class="register-form" method="POST">
                 <h2>Thông tin tài khoản</h2>
@@ -54,4 +49,3 @@
                 <p class="footer-text"><a href="index.php?page=edit_pass">Đổi mật khẩu</a></p>
             </form>
         </div>
-    </body>
