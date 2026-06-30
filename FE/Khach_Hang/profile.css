@@ -1,0 +1,138 @@
+/* Giao diện tổng quan */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Thùng chứa form căn giữa màn hình */
+.container {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Khối Form thông tin tài khoản */
+.form {
+    background: #ffffff;
+    padding: 35px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Tiêu đề FORM */
+.form h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Khối hiển thị Tên Đăng nhập (Dạng text tĩnh chỉ xem) */
+.form > div:nth-child(3) {
+    background-color: #eef2f5;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 4px solid #3498db;
+}
+
+.form > div:nth-child(3) p {
+    margin: 0;
+    color: #34495e;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Các cụm ô nhập liệu (Họ tên, SDT) */
+.form-input {
+    margin-bottom: 20px;
+}
+
+/* Tiêu đề nhỏ trên mỗi ô input */
+.form-input p {
+    margin: 0 0 8px 0;
+    color: #4f5f6f;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Thẻ input nhập liệu */
+.form-input input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccd1d9;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #333;
+    transition: all 0.3s ease;
+    background-color: #fbfbfb;
+}
+
+/* Hiệu ứng khi Admin/Khách click vào ô nhập liệu */
+.form-input input:focus {
+    border-color: #3498db;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    outline: none;
+}
+
+/* Nút bấm Cập nhật thông tin */
+.btn-submit {
+    width: 100%;
+    background-color: #2ecc71; /* Màu xanh lá thân thiện */
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+    box-shadow: 0 3px 6px rgba(46, 204, 113, 0.2);
+}
+
+/* Hiệu ứng hover nút bấm */
+.btn-submit:hover {
+    background-color: #27ae60;
+}
+
+/* Khu vực liên kết Đổi mật khẩu dưới cùng */
+.footer-text {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.footer-text a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-text a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Định dạng thẻ thông báo $message thành công */
+.form p[style*="color:green"] {
+    background-color: #d4edda;
+    color: #155724 !important;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #c3e6cb;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}

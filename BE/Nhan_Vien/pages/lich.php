@@ -16,7 +16,7 @@ if (isset($_POST['cancel'])) {
     $stmt_cancel->bind_param("ii", $datlich_id, $id_tho);
     
     if ($stmt_cancel->execute()) {
-        $message = "<p style='color:green; text-align:center; font-weight:bold;'>Đã hủy nhận lịch, đơn đã được trả về danh sách chờ!</p>";
+        $message = "<p style='color:green; text-align:center; font-weight:bold;'>Đã hủy nhận lịch!</p>";
     } else {
         $message = "<p style='color:red; text-align:center;'>Hủy lịch thất bại: " . $conn->error . "</p>";
     }
@@ -31,13 +31,12 @@ if (isset($_POST['complete'])) {
     $stmt_complete->bind_param("ii", $datlich_id, $id_tho);
     
     if ($stmt_complete->execute()) {
-        $message = "<p style='color:green; text-align:center; font-weight:bold;'>Chúc mừng! Đã xác nhận hoàn thành đơn hàng thành công.</p>";
+        $message = "<p style='color:green; text-align:center; font-weight:bold;'>Đã xác nhận hoàn thành đơn hàng thành công.</p>";
     } else {
         $message = "<p style='color:red; text-align:center;'>Thất bại: " . $conn->error . "</p>";
     }
 }
 
-// 4. TRUY VẤN LẤY CÁC ĐƠN MÀ THỢ NÀY ĐÃ NHẬN (Lọc theo Tho_id của thợ đang đăng nhập)
 $sql = "SELECT dl.*, dv.Tendv, dv.Gia 
         FROM datlich dl 
         INNER JOIN dichvu dv ON dl.Dichvu_id = dv.id 
@@ -82,7 +81,7 @@ $result = $stmt_get->get_result();
                 </div>
 
                 <div class="action-group">
-                    <?php if ($dl['TrangThai'] === 'da_nhan'): ?>
+                    <?php if ($dl['TrangThai'] === 'da_nhan' || $dl['TrangThai'] === 'da_thanh_toan'): ?>
                         
                         <form method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy và trả lịch này về danh sách chờ không?');" style="margin: 0;">
                             <input type="hidden" name="datlich_id" value="<?php echo $dl['id']; ?>">

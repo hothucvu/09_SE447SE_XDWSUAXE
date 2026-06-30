@@ -5,7 +5,7 @@ if (isset($_GET['loaixe'])) {
     $loaixe = $_GET['loaixe'];
 
     // Lấy các dịch vụ thuộc loại xe được chọn
-    $sql = "SELECT * FROM dichvu WHERE Loaixe = ?";
+    $sql = "SELECT * FROM dichvu WHERE Loaixe = ? and TrangThai NOT LIKE 'Ngừng cung cấp'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $loaixe);
     $stmt->execute();

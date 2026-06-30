@@ -35,6 +35,9 @@
                 <div>
                     <p>Tên Đăng nhập: <?php echo $user['Taikhoan'] ;?></p>
                 </div>
+                <div>
+                    <p>Vai trò: <?php echo $user['Vaitro'] ;?></p>
+                </div>
                 <div class="form-input">
                     <p>Tên người dùng: </p>
                     <input type="text" name ="Hoten" value="<?php echo $user['Hoten']; ?>">

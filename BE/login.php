@@ -60,8 +60,8 @@ if (isset($_POST['login'])) {
 
             <button type="submit" name="login" class="btn-submit">Đăng nhập</button>
 
-            <p class="footer-text"><a href="index.php?reset_register">Quên mật khẩu</a></p>
-            <p class="footer-text">Chưa có tài khoản? <a href="index.php?register">Đăng ký</a></p>
+            <p class="footer-text"><a href="reset_register.php">Quên mật khẩu</a></p>
+            <p class="footer-text">Chưa có tài khoản? <a href="register.php">Đăng ký</a></p>
         </form>
     </div>
 </body>

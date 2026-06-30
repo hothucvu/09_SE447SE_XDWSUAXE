@@ -52,6 +52,7 @@ $result = $stmt_get->get_result();
             if ($dl['TrangThai'] === 'cho_nhan') $text_trang_thai = "Chờ thợ nhận lịch";
             else if ($dl['TrangThai'] === 'da_nhan') $text_trang_thai = "Thợ đang di chuyển";
             else if ($dl['TrangThai'] === 'da_thanh_toan') $text_trang_thai = "Đã thanh toán";
+            else if ($dl['TrangThai'] === 'hoan_thanh') $text_trang_thai = "Hoàn thành";
             else if ($dl['TrangThai'] === 'huy') $text_trang_thai = "Đơn đã hủy";
             ?>
             
@@ -87,13 +88,11 @@ $result = $stmt_get->get_result();
                         </form>
                     <?php endif; ?>
 
-                    <?php if ($dl['TrangThai'] === 'da_thanh_toan'): ?>
-                        <form method="POST" action="index.php?page=review" style="padding: 5px">
-                            <input type="hidden" name="datlich_id" value="<?php echo $dl['id']; ?>">
-                            <button type="submit" class="btn btn-review">Đánh giá dịch vụ</button>
-                        </form>
+                    <?php if ($dl['TrangThai'] === 'hoan_thanh'): ?>
+                        <a href="index.php?page=review&datlich_id=<?php echo $dl['id']; ?>">
+                            ⭐ Đánh giá dịch vụ
+                        </a>
                     <?php endif; ?>
-
                 </div>
             </div>
             

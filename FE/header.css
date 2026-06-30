@@ -1,0 +1,68 @@
+/* Toàn bộ tài liệu */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* Định dạng thanh Header */
+header {
+    background-color: #2c3e50; /* Màu xanh đen công sở thanh lịch */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Định dạng cấu trúc danh sách điều hướng (Thay thế tư duy thẻ table) */
+header table {
+    width: 100%;
+    border-spacing: 0 !important; /* Triệt tiêu khoảng cách cũ của table */
+    margin: 0;
+    padding: 0;
+}
+
+header tr {
+    display: flex;
+    justify-content: flex-start; /* Sắp xếp các nút menu từ trái sang */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px; /* Tạo khoảng cách đều 15px giữa các nút */
+}
+
+header td {
+    padding: 0;
+    list-style: none;
+}
+
+header td a {
+    display: inline-block;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 18px;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Tạo hiệu ứng mượt mà khi di chuột */
+}
+
+/* Hiệu ứng Hover (khi rê chuột vào các nút) */
+header td a:hover {
+    background-color: #34495e;
+    color: #3498db; 
+}
+
+header tr td:last-child {
+    margin-left: auto; 
+}
+
+header tr td:last-child a {
+    background-color: #e74c3c; 
+    color: white;
+}
+
+header tr td:last-child a:hover {
+    background-color: #c0392b;
+    color: white;
+}

@@ -4,103 +4,110 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$id_tho = $_SESSION['user_id'];
+$id_khach = $_SESSION['user_id'];
 $message = "";
 
-// 2. XỬ LÝ KHI THỢ BẤM NÚT "HỦY NHẬN LỊCH" (Trả đơn về trạng thái chờ)
-if (isset($_POST['cancel'])) {
-    $datlich_id = $_POST['datlich_id'];
-    
-    $sql_cancel = "UPDATE datlich SET Tho_id = NULL, TrangThai = 'cho_nhan' WHERE id = ? AND Tho_id = ?";
-    $stmt_cancel = $conn->prepare($sql_cancel);
-    $stmt_cancel->bind_param("ii", $datlich_id, $id_tho);
-    
-    if ($stmt_cancel->execute()) {
-        $message = "<p style='color:green; text-align:center; font-weight:bold;'>Đã hủy nhận lịch, đơn đã được trả về danh sách chờ!</p>";
-    } else {
-        $message = "<p style='color:red; text-align:center;'>Hủy lịch thất bại: " . $conn->error . "</p>";
-    }
+$datlich_id = isset($_GET['datlich_id']) ? intval($_GET['datlich_id']) : 0;
+
+$sql_check = "SELECT dl.*, dv.Tendv
+              FROM datlich dl 
+              INNER JOIN dichvu dv ON dl.Dichvu_id = dv.id 
+              WHERE dl.id = ? AND dl.Khach_id = ? AND dl.TrangThai = 'hoan_thanh' 
+              LIMIT 1";
+
+$stmt_check = $conn->prepare($sql_check);
+
+$stmt_check->bind_param("ii", $datlich_id, $id_khach);
+$stmt_check->execute();
+$res_check = $stmt_check->get_result();
+$don_hang = $res_check->fetch_assoc();
+
+if (!$don_hang) {
+    echo "<div>
+            <p class='msg-e'>Lỗi: Đơn hàng không tồn tại hoặc chưa hoàn thành để có thể đánh giá!</p>
+            <a href='index.php?page=list' btn>← Quay lại lịch sử đặt lịch</a>
+          </div>";
+    exit();
 }
 
-// 3. XỬ LÝ KHI THỢ BẤM NÚT "HOÀN THÀNH" (Xác nhận sửa xong xe)
-if (isset($_POST['complete'])) {
-    $datlich_id = $_POST['datlich_id'];
-    
-    $sql_complete = "UPDATE datlich SET TrangThai = 'hoan_thanh' WHERE id = ? AND Tho_id = ?";
-    $stmt_complete = $conn->prepare($sql_complete);
-    $stmt_complete->bind_param("ii", $datlich_id, $id_tho);
-    
-    if ($stmt_complete->execute()) {
-        $message = "<p style='color:green; text-align:center; font-weight:bold;'>Chúc mừng! Đã xác nhận hoàn thành đơn hàng thành công.</p>";
-    } else {
-        $message = "<p style='color:red; text-align:center;'>Thất bại: " . $conn->error . "</p>";
-    }
+$sql_check_reviewed = "SELECT id FROM danh_gia WHERE dat_lich_id = ? LIMIT 1";
+$stmt_reviewed = $conn->prepare($sql_check_reviewed);
+$stmt_reviewed->bind_param("i", $datlich_id);
+$stmt_reviewed->execute();
+$res_reviewed = $stmt_reviewed->get_result();
+
+if ($res_reviewed->num_rows > 0) {
+    echo "<div>
+            <p class='msg-e'>Lỗi: Đơn hàng đã đánh giá!</p>
+            <a href='index.php?page=list' class='btn'>← Quay lại lịch sử đặt lịch</a>
+          </div>";
+    exit(); 
 }
 
-// 4. TRUY VẤN LẤY CÁC ĐƠN MÀ THỢ NÀY ĐÃ NHẬN (Lọc theo Tho_id của thợ đang đăng nhập)
-$sql = "SELECT dl.*, dv.Tendv, dv.Gia 
-        FROM datlich dl 
-        INNER JOIN dichvu dv ON dl.Dichvu_id = dv.id 
-        WHERE dl.Tho_id = ? 
-        ORDER BY dl.Time DESC";
+if (isset($_POST['submit_review'])) {
+    $sosao = intval($_POST['sosao']);
+    $noidung = trim($_POST['noidung']);
 
-$stmt_get = $conn->prepare($sql);
-$stmt_get->bind_param("i", $id_tho);
-$stmt_get->execute();
-$result = $stmt_get->get_result();
+    if ($sosao < 1 || $sosao > 5) {
+        $message = "<p class='msg-e'>Vui lòng chọn số sao đánh giá từ 1 đến 5!</p>";
+    } else {
+        $sql_insert = "INSERT INTO danh_gia (dat_lich_id, so_sao, binh_luan) VALUES (?, ?, ?)";
+        $stmt_insert = $conn->prepare($sql_insert);
+        
+        if ($stmt_insert === false) {
+            $message = "<p class='msg-e'>Lỗi cấu trúc bảng danh_gia: " . htmlspecialchars($conn->error) . "</p>";
+        } else {
+            $stmt_insert->bind_param("iis", $datlich_id, $sosao, $noidung);
+            if ($stmt_insert->execute()) {
+                $message = "<p class='msg-s'> Cảm ơn bạn! Đánh giá dịch vụ đã được gửi thành công.</p>";
+            } else {
+                $message = "<p class='msg-e'>Đã xảy ra lỗi hệ thống khi lưu: " . htmlspecialchars($stmt_insert->error) . "</p>";
+            }
+        }
+    }
+}
 ?>
 
-<link rel="stylesheet" href="../FE/Nhan_Vien/nhan_lich.css">
+<div class="review-container">
+    <div class="review-box">
+        <h2><i class="fa-solid fa-star"></i> ĐÁNH GIÁ DỊCH VỤ</h2>
+        
+        <?php echo $message; ?>
 
-<div class="booking-list">
-    <h2 style="text-align: center; font-weight: bolder;">Lịch làm việc của bạn</h2>
-    
-    <?php echo $message; ?>
+        <div class="order-summary">
+            <p><strong>Mã đơn cứu hộ:</strong> #<?php echo $don_hang['id']; ?></p>
+            <p><strong>Dịch vụ thực hiện:</strong> <?php echo htmlspecialchars($don_hang['Tendv']); ?></p>
+            <p><strong>Thời gian đặt lịch:</strong> <?php echo date('d/m/Y H:i', strtotime($don_hang['Time'])); ?></p>
+        </div>
 
-    <?php
-    if ($result && $result->num_rows > 0) {
-        while ($dl = $result->fetch_assoc()) {
-            
-            // Xử lý text hiển thị trạng thái
-            $text_trang_thai = ($dl['TrangThai'] === 'da_nhan') ? "Đang tiến hành / Di chuyển" : "Đã sửa hoàn thành";
-            ?>
-            
-            <div class="booking-card" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; background: #fff;">
-                <h3>🛠️ Đơn hàng mã số: #<?php echo $dl['id']; ?></h3>
-                
-                <div class="info-row"><strong>Dịch vụ yêu cầu:</strong> <?php echo $dl['Tendv']; ?></div>
-                <div class="info-row"><strong>Giá linh kiện:</strong> <span style="color: #28a745; font-weight: bold;"><?php echo number_format($dl['Gia']); ?> VNĐ</span></div>
-                <div class="info-row"><strong>Loại xe:</strong> <?php echo $dl['Loaixe']; ?></div>
-                <div class="info-row"><strong>Địa chỉ khách hàng:</strong> <?php echo $dl['Diachi']; ?></div>
-                <div class="info-row"><strong>Thời gian đặt:</strong> <?php echo date('d/m/Y H:i', strtotime($dl['Time'])); ?></div>
-                
-                <div class="info-row" style="margin-top: 5px;">
-                    <strong>Trạng thái:</strong> 
-                    <span class="">
-                        <?php echo $text_trang_thai; ?>
-                    </span>
-                </div>
-
-                <div class="action-group">
-                    <?php if ($dl['TrangThai'] === 'da_nhan'): ?>
-                        
-                        <form method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy và trả lịch này về danh sách chờ không?');" style="margin: 0;">
-                            <input type="hidden" name="datlich_id" value="<?php echo $dl['id']; ?>">
-                            <button type="submit" name="cancel" class="btn btn-cancel">Hủy nhận lịch</button>
-                        </form>
-                        
-                        <form method="POST" onsubmit="return confirm('Bạn đã sửa xong xe cho khách và xác nhận hoàn thành đơn này?');" style="margin: 0;">
-                            <input type="hidden" name="datlich_id" value="<?php echo $dl['id']; ?>">
-                            <button type="submit" name="complete" class="btn btn-complete">Hoàn thành sửa</button>
-                        </form>
-                    <?php endif; ?>
+        <form method="POST" action="">
+            <div class="form-group" style="text-align: center;">
+                <label>Vui lòng chọn mức độ hài lòng của bạn:</label>
+                <div class="rating-stars">
+                    <input type="radio" id="star1" name="sosao" value="1" required>
+                    <label for="star1" title="1 sao"><i class="fa-solid fa-star"></i></label>
+                    
+                    <input type="radio" id="star2" name="sosao" value="2">
+                    <label for="star2" title="2 sao"><i class="fa-solid fa-star"></i></label>
+                    
+                    <input type="radio" id="star3" name="sosao" value="3">
+                    <label for="star3" title="3 sao"><i class="fa-solid fa-star"></i></label>
+                    
+                    <input type="radio" id="star4" name="sosao" value="4">
+                    <label for="star4" title="4 sao"><i class="fa-solid fa-star"></i></label>
+                    
+                    <input type="radio" id="star5" name="sosao" value="5">
+                    <label for="star5" title="5 sao"><i class="fa-solid fa-star"></i></label>
                 </div>
             </div>
-            
-            <?php
-        }
-    } else {
-        echo "<p style='text-align:center; color:#666; margin-top: 30px;'>Bạn chưa nhận lịch sửa chữa nào trên hệ thống.</p>";
-    }
-    ?>
+
+            <div class="form-group">
+                <textarea style="width: 40%; height :200px"  id="noidung" name="noidung" placeholder="Nhập cảm nhận của bạn về chất lượng dịch vụ..."></textarea>
+            </div>
+
+            <button type="submit" name="submit_review" class="btn-submit-review">
+                Gửi đánh giá ngay
+            </button>
+        </form>
+    </div>
 </div>

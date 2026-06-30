@@ -1,0 +1,12 @@
+    .pay-container { max-width: 600px; margin: 30px auto; padding: 0 15px; font-family: 'Segoe UI', Arial, sans-serif; }
+    .pay-box { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+    .pay-box h2 { text-align: center; color: #2d3748; margin-top: 0; margin-bottom: 25px; }
+    .bill-detail { background: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #007bff; }
+    .bill-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 15px; color: #4a5568; }
+    .bill-total { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 2px dashed #e2e8f0; font-size: 18px; font-weight: bold; color: #e53e3e; }
+    .method-group { margin-bottom: 25px; }
+    .qr-block { display: block; text-align: center; background: #f7fafc; padding: 20px; border-radius: 8px; border: 1px dashed #cbd5e1; }
+    .btn-pay-submit { width: 100%; background: #007bff; color: white; border: none; padding: 13px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; margin-top: 15px; }
+    .btn-pay-submit:hover { background: #0056b3; }
+    .msg-success { background: #c6f6d5; color: #22543d; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 20px; font-weight: bold; }
+    .msg-error { background: #fed7d7; color: #742a2a; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 20px; font-weight: bold; }

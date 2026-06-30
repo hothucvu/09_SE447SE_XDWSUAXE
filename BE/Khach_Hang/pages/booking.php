@@ -29,7 +29,7 @@ if (isset($_POST['booking'])) {
 <link rel="stylesheet" href="../FE/Khach_Hang/profile.css">
 
 <div class="container">
-    <form class="register-form" method="POST">
+    <form class="form" method="POST">
         <h2>Đặt dịch vụ sửa xe chuyên nghiệp</h2>
         
         <?php echo $message; ?>

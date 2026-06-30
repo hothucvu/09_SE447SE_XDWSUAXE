@@ -8,7 +8,6 @@
         align-items: flex-start;
     }
 
-    /* ĐỊNH DẠNG CỘT TRÁI - KHỐI NHỎ */
     .left {
         flex: 1;
         min-width: 280px;
@@ -18,7 +17,6 @@
         padding: 24px;
     }
 
-    /* ĐỊNH DẠNG CỘT PHẢI - KHỐI CHÍNH LỚN */
     .right {
         flex: 3; 
         background: #ffffff;    
